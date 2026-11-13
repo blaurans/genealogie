@@ -40,6 +40,9 @@ importé est persisté dans `$DATA_DIR/current.ged` et rechargé au démarrage).
 | `GET /demo.ged` | fichier d'exemple |
 | `GET /healthz` | sonde de vie |
 
+> Docker : le conteneur tourne en uid 1000 — `sudo chown 1000 data/`
+> si le dossier est créé par root, sinon la persistance échoue.
+
 ## Docker + Caddy
 
 Le compose joint le réseau Docker `headscale_default` (là où tourne le
