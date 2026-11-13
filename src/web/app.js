@@ -171,9 +171,13 @@ function buildGroups() {
   }
 
   function layout(g, left) {
-    g.x = g.subs.length ? (g.subs[0].x + g.subs[g.subs.length - 1].x) / 2 : left + g.w / 2;
+    if (!g.subs.length) {
+      g.x = left + g.w / 2;
+      return;
+    }
     let cur = left;
     for (const s of g.subs) { layout(s, cur); cur += s.w + SIB_GAP; }
+    g.x = (g.subs[0].x + g.subs[g.subs.length - 1].x) / 2;
   }
 
   const focal = makeGroup(S.focal, "down", 0);
