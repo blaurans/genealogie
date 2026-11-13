@@ -227,9 +227,13 @@ function screenToWorld(x, y) { return { x: (x - S.t.x) / S.t.s, y: (y - S.t.y) /
 function draw() {
   const dpr = window.devicePixelRatio || 1;
   const W = canvas.clientWidth, H = canvas.clientHeight;
+  if (!W || !H) return;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, W, H);
   drawBackground(W, H);
+  if (!isFinite(S.t.x) || !isFinite(S.t.y) || !isFinite(S.t.s) || S.t.s <= 0) {
+    S.t = { x: W / 2, y: H / 2, s: 1 };
+  }
   ctx.save();
   ctx.translate(S.t.x, S.t.y);
   ctx.scale(S.t.s, S.t.s);
@@ -239,7 +243,8 @@ function draw() {
 }
 
 function drawBackground(W, H) {
-  const g = ctx.createLinearGradient(0, 0, 0, H);
+  const h = Number.isFinite(H) && H > 0 ? H : 1;
+  const g = ctx.createLinearGradient(0, 0, 0, h);
   g.addColorStop(0, "#101521");
   g.addColorStop(1, "#0c0f16");
   ctx.fillStyle = g;
@@ -336,6 +341,7 @@ function roundRectPath(c, x, y, w, h, r) {
 function drawPersonBox(cx, cy, p) {
   const w = NODE_W, h = NODE_H;
   const x = cx - w / 2, y = cy - h / 2;
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return;
   S.boxes.push({ x, y, w, h, pid: p.id });
 
   const isFocal = p.id === S.focal;
@@ -418,9 +424,14 @@ function computeFit() {
   if (!S.boxes.length) return { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2, s: 1 };
   let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
   for (const b of S.boxes) { x1 = Math.min(x1, b.x); y1 = Math.min(y1, b.y); x2 = Math.max(x2, b.x + b.w); y2 = Math.max(y2, b.y + b.h); }
-  const cw = canvas.clientWidth, ch = canvas.clientHeight, pad = 70;
-  const s = Math.max(0.08, Math.min((cw - 2 * pad) / (x2 - x1 || 1), (ch - 2 * pad) / (y2 - y1 || 1), 1.5));
-  return { s, x: (cw - (x1 + x2) * s) / 2, y: (ch - (y1 + y2) * s) / 2 };
+  if (!isFinite(x1) || !isFinite(y1) || !isFinite(x2) || !isFinite(y2)) {
+    return { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2, s: 1 };
+  }
+  const cw = canvas.clientWidth || 1, ch = canvas.clientHeight || 1, pad = 70;
+  const dx = (x2 - x1) || 1, dy = (y2 - y1) || 1;
+  const s = Math.max(0.08, Math.min((cw - 2 * pad) / dx, (ch - 2 * pad) / dy, 1.5));
+  const tx = (cw - (x1 + x2) * s) / 2, ty = (ch - (y1 + y2) * s) / 2;
+  return { s: isFinite(s) ? s : 1, x: isFinite(tx) ? tx : cw / 2, y: isFinite(ty) ? ty : ch / 2 };
 }
 
 let animId = null;
