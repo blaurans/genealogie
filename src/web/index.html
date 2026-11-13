@@ -10,18 +10,17 @@
 <body>
 
 <header id="topbar">
-  <span id="logo">🌳 <strong>Généalogie</strong></span>
+  <div id="logo"><span class="mark">🌳</span><strong>Généalogie</strong></div>
   <div id="search-wrap">
-    <input id="search" type="search" placeholder="Rechercher une personne…" autocomplete="off">
+    <input id="search" type="search" placeholder="Rechercher une personne, un lieu…" autocomplete="off" spellcheck="false">
     <div id="search-results" class="hidden"></div>
   </div>
   <div id="controls">
-    <label class="ctrl">Générations
-      <button id="gen-dec">−</button><span id="gen-value">4</span><button id="gen-inc">+</button>
+    <label class="ctrl" title="Profondeur affichée autour de la personne centrale">Générations
+      <button id="gen-dec" aria-label="Moins">−</button><span id="gen-value">4</span><button id="gen-inc" aria-label="Plus">+</button>
     </label>
-    <button id="btn-recenter" title="Recentrer sur la personne sélectionnée">◎ Centrer</button>
     <span id="file-info"></span>
-    <button id="btn-upload" class="primary">Importer un .ged…</button>
+    <button id="btn-upload" class="primary">Importer un .ged</button>
   </div>
 </header>
 
@@ -30,23 +29,31 @@
 <main>
   <canvas id="canvas"></canvas>
 
-  <div id="detail" class="hidden"></div>
+  <div id="zoom-controls">
+    <button id="btn-zoom-in" title="Zoom avant">+</button>
+    <button id="btn-zoom-out" title="Zoom arrière">−</button>
+    <button id="btn-fit" title="Ajuster la vue">⤢</button>
+    <button id="btn-recenter" title="Recentrer sur la sélection">◎</button>
+  </div>
+
+  <aside id="detail" class="hidden"></aside>
 
   <div id="legend">
-    <span><i class="m"></i> Homme</span>
-    <span><i class="f"></i> Femme</span>
-    <span><i class="u"></i> Non renseigné</span>
-    <span class="muted">Molette : zoom · clic-glisser : déplacer · clic : fiche</span>
+    <span class="pill"><i class="m"></i>Homme</span>
+    <span class="pill"><i class="f"></i>Femme</span>
+    <span class="pill"><i class="u"></i>Inconnu</span>
+    <span class="hint">Molette : zoom · glisser : déplacer · clic : fiche · double-clic : centrer</span>
   </div>
 
   <div id="welcome" class="hidden">
     <div class="card">
-      <h1>🌳 Visualisez votre arbre généalogique</h1>
-      <p>Importez un fichier GEDCOM (exportable depuis tout logiciel de
-         généalogie : Heredis, Geneanet, Family Tree Maker, Ancestris…)
-         et explorez-le : ancêtres, descendants, mariages, lieux et dates.</p>
-      <button id="welcome-upload" class="primary big">📁 Choisir un fichier .ged</button>
-      <button id="welcome-demo">Voir un exemple</button>
+      <div class="hero">🌳</div>
+      <h1>Votre arbre généalogique, en un clic</h1>
+      <p>Importez un fichier <strong>GEDCOM</strong> (.ged) — exportable depuis Heredis, Geneanet, Family Tree Maker, Ancestris, Gramps… — et explorez les liens familiaux : ancêtres, descendants, unions, dates et lieux.</p>
+      <div class="actions">
+        <button id="welcome-upload" class="primary big">Choisir un fichier .ged</button>
+        <button id="welcome-demo" class="big ghost">Voir un exemple</button>
+      </div>
       <p id="upload-error" class="error hidden"></p>
     </div>
   </div>
