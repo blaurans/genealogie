@@ -8,6 +8,7 @@ const S = {
   focal: null,
   gens: 4,
   groups: [],
+  upEdges: [],  // groupes parents reliés au focal
   boxes: [],
   t: { x: 0, y: 0, s: 1 },
   selected: null,
@@ -140,7 +141,7 @@ function buildGroups() {
           if (seenChild.has(cid) || visited.has(cid) || !S.P.has(cid)) continue;
           seenChild.add(cid);
           const cg = makeGroup(cid, "down", gen + 1);
-          if (cg && cg.members.length) { childGroups.push(cg); growDown(cg, gen + 1); }
+          if (cg && cg.members.length) { cg.attachedTo = mid; childGroups.push(cg); growDown(cg, gen + 1); }
         }
       }
     }
@@ -179,7 +180,8 @@ function buildGroups() {
   growDown(focal, 0);
   visited.clear();
 
-  const upRoot = { dir: "up", gen: 0, members: [S.focal], famLinks: [], subs: [], w: NODE_W, attachedTo: null };
+  // arbre ascendant : ancre invisible reliée au groupe focal (pas de doublon du focal)
+  const upRoot = { dir: "up", gen: 0, members: [], famLinks: [], subs: [], y: 0, x: 0, w: NODE_W, anchor: true, childTarget: focal };
   const par = parentsOf(S.focal);
   const pg = [];
   for (const pid of par ? [par.father, par.mother] : []) {
@@ -197,18 +199,19 @@ function buildGroups() {
   computeWidth(upRoot, dedup);
 
   layout(focal, -focal.w / 2);
-  upRoot.x = focal.x;
   let cur = focal.x - upRoot.w / 2;
   for (const s of upRoot.subs) { layout(s, cur); cur += s.w + SIB_GAP; }
-  if (upRoot.subs.length) upRoot.x = (upRoot.subs[0].x + upRoot.subs[upRoot.subs.length - 1].x) / 2;
+  upRoot.x = upRoot.subs.length ? (upRoot.subs[0].x + upRoot.subs[upRoot.subs.length - 1].x) / 2 : focal.x;
 
-  focal.y = 0;
-  const walk = (g) => { for (const s of g.subs) { s.y = g === upRoot ? -s.gen * ROW_H : s.gen * ROW_H; walk(s); } };
-  for (const s of focal.subs) { s.y = s.gen * ROW_H; walk(s); }
-  for (const s of upRoot.subs) { s.y = -s.gen * ROW_H; walk(s); }
+  focal.y = 0; upRoot.y = 0;
+  const walkDown = (g) => { for (const s of g.subs) { s.y = s.gen * ROW_H; walkDown(s); } };
+  const walkUp = (g) => { for (const s of g.subs) { s.y = -s.gen * ROW_H; walkUp(s); } };
+  walkDown(focal);
+  walkUp(upRoot);
 
   function collect(g, out) { for (const s of g.subs) { out.push(s); collect(s, out); } return out; }
-  S.groups = [focal, upRoot, ...collect(focal, []), ...collect(upRoot, [])];
+  S.groups = [focal, ...collect(focal, []), ...collect(upRoot, [])];
+  S.upEdges = upRoot.subs; // parents à relier vers le focal
   computePathSet();
 }
 
@@ -268,27 +271,50 @@ function groupMemberX(g, i) {
 
 function isHighlighted(id) { return S.pathSet.has(id); }
 
+function drawCurve(fromX, fromY, toX, toY, hi) {
+  ctx.strokeStyle = hi ? "rgba(124, 240, 200, 0.55)" : "rgba(140, 160, 190, 0.22)";
+  ctx.lineWidth = hi ? 2.4 : 1.4;
+  ctx.beginPath();
+  ctx.moveTo(fromX, fromY);
+  const midY = (fromY + toY) / 2;
+  ctx.bezierCurveTo(fromX, midY, toX, midY, toX, toY);
+  ctx.stroke();
+}
+
 function drawEdges() {
+  const focalGroup = S.groups[0];
+
   for (const g of S.groups) {
     if (!g || !g.subs) continue;
     for (const s of g.subs) {
-      const topRow = g.dir === "down" ? g : s;
-      const childGroup = g.dir === "down" ? s : g;
-      const attachId = s.attachedTo || childGroup.members[0];
-      let attachIdx = topRow.members.indexOf(attachId);
-      if (attachIdx === -1) attachIdx = Math.floor(topRow.members.length / 2);
-      const fromX = groupMemberX(topRow, attachIdx);
-      const fromY = topRow.y + (topRow.dir === "down" ? NODE_H / 2 : -NODE_H / 2);
-      const toX = childGroup.x;
-      const toY = childGroup.y + (childGroup.dir === "down" ? -NODE_H / 2 : NODE_H / 2);
-      const hi = isHighlighted(childGroup.members[0]) && topRow.members.some(isHighlighted);
-      ctx.strokeStyle = hi ? "rgba(124, 240, 200, 0.55)" : "rgba(140, 160, 190, 0.22)";
-      ctx.lineWidth = (hi ? 2.4 : 1.4);
-      ctx.beginPath();
-      ctx.moveTo(fromX, fromY);
-      const midY = (fromY + toY) / 2;
-      ctx.bezierCurveTo(fromX, midY, toX, midY, toX, toY);
-      ctx.stroke();
+      // sens : toujours du nœud du haut vers le nœud du bas
+      let upper = g, lower = s;
+      if (s.y < g.y) { upper = s; lower = g; }
+      const attachId = lower.attachedTo || (upper === g ? s.members[0] : g.members[0]);
+      let attachIdx = lower.members ? -1 : -1;
+      // point d'attache sur le nœud du bas = personne reliée (si connue)
+      if (lower.members) attachIdx = lower.members.indexOf(attachId);
+      if (attachIdx < 0 && lower.members) attachIdx = Math.floor(lower.members.length / 2);
+      // pour côté ascendant, le parent (upper) est attaché à un enfant spécifique (lower.attachedTo)
+      if (upper === s && lower === g) {
+        // s au-dessus, g en dessous : on part du centre du parent s vers le point d'attache dans g
+        const toX = lower.members && attachIdx >= 0 ? groupMemberX(lower, attachIdx) : lower.x;
+        const toY = lower.y - NODE_H / 2;
+        const fromX = upper.x;
+        const fromY = upper.y + NODE_H / 2;
+        const hi = upper.members.some(isHighlighted) && lower.members.some(isHighlighted);
+        drawCurve(fromX, fromY, toX, toY, hi);
+      } else {
+        // g au-dessus, s en dessous (descendance)
+        attachIdx = g.members.indexOf(s.attachedTo);
+        if (attachIdx < 0) attachIdx = Math.floor(g.members.length / 2);
+        const fromX = groupMemberX(g, attachIdx);
+        const fromY = g.y + NODE_H / 2;
+        const toX = s.x;
+        const toY = s.y - NODE_H / 2;
+        const hi = s.members.some(isHighlighted) && g.members.some(isHighlighted);
+        drawCurve(fromX, fromY, toX, toY, hi);
+      }
     }
     // liens couple
     for (const l of g.famLinks) {
@@ -311,6 +337,21 @@ function drawEdges() {
         ctx.textBaseline = "bottom";
         ctx.fillText("⚭ " + l.year, (x1 + x2) / 2, g.y - 4);
       }
+    }
+  }
+
+  // liaisons ascendantes : des parents (au-dessus) vers le focal (au centre)
+  if (focalGroup) {
+    for (const s of (S.upEdges || [])) {
+      const fromX = s.x;
+      const fromY = s.y + NODE_H / 2;       // bas du groupe parent
+      const attachId = s.attachedTo || S.focal;
+      let attachIdx = focalGroup.members.indexOf(attachId);
+      if (attachIdx === -1) attachIdx = 0;
+      const toX = groupMemberX(focalGroup, attachIdx);
+      const toY = focalGroup.y - NODE_H / 2; // haut du focal
+      const hi = s.members.some(isHighlighted) && isHighlighted(attachId);
+      drawCurve(fromX, fromY, toX, toY, hi);
     }
   }
 }
