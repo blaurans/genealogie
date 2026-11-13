@@ -1,0 +1,19 @@
+services:
+  genealogie:
+    build: .
+    image: genealogie:latest
+    container_name: genealogie
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      DATA_DIR: /data
+    volumes:
+      - ./data:/data
+    ports:
+      - "127.0.0.1:8087:8080"
+    networks:
+      - headscale_default
+
+networks:
+  headscale_default:
+    external: true

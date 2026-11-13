@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Généalogie — arbre familial</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
+</head>
+<body>
+
+<header id="topbar">
+  <span id="logo">🌳 <strong>Généalogie</strong></span>
+  <div id="search-wrap">
+    <input id="search" type="search" placeholder="Rechercher une personne…" autocomplete="off">
+    <div id="search-results" class="hidden"></div>
+  </div>
+  <div id="controls">
+    <label class="ctrl">Générations
+      <button id="gen-dec">−</button><span id="gen-value">4</span><button id="gen-inc">+</button>
+    </label>
+    <button id="btn-recenter" title="Recentrer sur la personne sélectionnée">◎ Centrer</button>
+    <span id="file-info"></span>
+    <button id="btn-upload" class="primary">Importer un .ged…</button>
+  </div>
+</header>
+
+<input type="file" id="file-input" accept=".ged,.gedcom,text/*" hidden>
+
+<main>
+  <canvas id="canvas"></canvas>
+
+  <div id="detail" class="hidden"></div>
+
+  <div id="legend">
+    <span><i class="m"></i> Homme</span>
+    <span><i class="f"></i> Femme</span>
+    <span><i class="u"></i> Non renseigné</span>
+    <span class="muted">Molette : zoom · clic-glisser : déplacer · clic : fiche</span>
+  </div>
+
+  <div id="welcome" class="hidden">
+    <div class="card">
+      <h1>🌳 Visualisez votre arbre généalogique</h1>
+      <p>Importez un fichier GEDCOM (exportable depuis tout logiciel de
+         généalogie : Heredis, Geneanet, Family Tree Maker, Ancestris…)
+         et explorez-le : ancêtres, descendants, mariages, lieux et dates.</p>
+      <button id="welcome-upload" class="primary big">📁 Choisir un fichier .ged</button>
+      <button id="welcome-demo">Voir un exemple</button>
+      <p id="upload-error" class="error hidden"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

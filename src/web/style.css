@@ -1,0 +1,225 @@
+:root {
+  --bg: #14171c;
+  --panel: #1d222b;
+  --panel2: #232a35;
+  --text: #dfe6f0;
+  --muted: #8a95a6;
+  --accent: #4da3ff;
+  --male: #4a7dbd;
+  --male-fill: #24425f;
+  --female: #c0576e;
+  --female-fill: #5a2c38;
+  --unknown: #7a8291;
+  --unknown-fill: #333a44;
+  --focus: #f0b429;
+  --border: #2e3644;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- barre du haut ---------- */
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+#logo { white-space: nowrap; }
+
+#search-wrap { position: relative; flex: 1 1 260px; max-width: 460px; }
+
+#search {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+#search:focus { border-color: var(--accent); }
+
+#search-results {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  margin-top: 4px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+#search-results .result {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+#search-results .result:hover { background: var(--male-fill); }
+#search-results .dates { color: var(--muted); font-size: 12px; }
+.hidden { display: none !important; }
+
+#controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ctrl { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; }
+.ctrl button {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  cursor: pointer;
+}
+.ctrl span { min-width: 16px; text-align: center; color: var(--text); }
+
+button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 14px;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #08131f; font-weight: 600; }
+button.primary:hover { filter: brightness(1.1); }
+button.big { font-size: 16px; padding: 12px 20px; }
+
+#file-info { color: var(--muted); font-size: 13px; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- canvas ---------- */
+main { flex: 1; position: relative; overflow: hidden; }
+#canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+#canvas.dragging { cursor: grabbing; }
+
+/* ---------- légende ---------- */
+#legend {
+  position: absolute;
+  left: 16px; bottom: 16px;
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+#legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+#legend i.m { background: var(--male); }
+#legend i.f { background: var(--female); }
+#legend i.u { background: var(--unknown); }
+#legend .muted { color: var(--muted); }
+
+/* ---------- fiche détail ---------- */
+#detail {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 320px;
+  max-height: calc(100% - 32px);
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+  z-index: 5;
+}
+#detail h2 { font-size: 18px; margin-bottom: 4px; }
+#detail .sex { font-size: 12px; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+#detail .sex.m { background: var(--male-fill); color: #9cc4ee; }
+#detail .sex.f { background: var(--female-fill); color: #f0a4b3; }
+#detail .years { color: var(--muted); margin-bottom: 12px; }
+#detail .event { margin: 10px 0; }
+#detail .event .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+#detail .event .value { font-size: 14px; margin-top: 2px; }
+#detail h3 { font-size: 13px; margin: 16px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+#detail .link {
+  display: block;
+  padding: 6px 10px;
+  margin: 4px 0;
+  background: var(--panel2);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+#detail .link:hover { background: var(--male-fill); }
+#detail .link small { color: var(--muted); }
+#detail .close {
+  position: absolute; top: 8px; right: 8px;
+  border: none; background: none; color: var(--muted);
+  font-size: 18px; padding: 4px 8px;
+}
+
+/* ---------- écran d'accueil ---------- */
+#welcome {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  z-index: 20;
+}
+#welcome .card {
+  max-width: 560px;
+  padding: 40px;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+#welcome h1 { margin-bottom: 12px; font-size: 24px; }
+#welcome p { color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+#welcome .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+#error { margin-top: 12px; }
+
+.error { color: #ff8a8a; margin-top: 12px; }
+
+/* ---------- toast ---------- */
+#toast {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  z-index: 30;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+#toast.error { border-color: #a33; }
+
+@media (max-width: 700px) {
+  #legend .muted { display: none; }
+  #detail { width: calc(100% - 24px); right: 12px; }
+}

@@ -1,0 +1,345 @@
+0 HEAD
+1 SOUR genealogie-demo
+1 GEDC
+2 VERS 5.5
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Edouard /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 14 MAR 1938
+2 PLAC Rouen, Seine-Maritime, France
+1 DEAT
+2 DATE 2 NOV 2018
+2 PLAC Vannes, Morbihan, France
+1 OCCU Instituteur
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Marguerite /Lefevre/
+1 SEX F
+1 BIRT
+2 DATE 8 JUL 1941
+2 PLAC Caen, Calvados, France
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME Henri /Petit/
+1 SEX M
+1 BIRT
+2 DATE 22 SEP 1939
+2 PLAC Reims, Marne, France
+1 FAMS @F2@
+0 @I4@ INDI
+1 NAME Camille /Rousseau/
+1 SEX F
+1 BIRT
+2 DATE 30 JAN 1943
+2 PLAC Nancy, Meurthe-et-Moselle, France
+1 FAMS @F2@
+0 @I5@ INDI
+1 NAME Albert /Garnier/
+1 SEX M
+1 BIRT
+2 DATE 5 MAY 1935
+2 PLAC Dijon, Cote-d'Or, France
+1 DEAT
+2 DATE 17 FEB 2001
+2 PLAC Dijon, Cote-d'Or, France
+1 FAMS @F3@
+0 @I6@ INDI
+1 NAME Yvonne /Chevalier/
+1 SEX F
+1 BIRT
+2 DATE 19 DEC 1937
+2 PLAC Besancon, Doubs, France
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME Pierre /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 20 SEP 1964
+2 PLAC Rouen, Seine-Maritime, France
+1 FAMC @F1@
+1 FAMS @F4@
+0 @I8@ INDI
+1 NAME Isabelle /Petit/
+1 SEX F
+1 BIRT
+2 DATE 11 APR 1966
+2 PLAC Reims, Marne, France
+1 FAMC @F2@
+1 FAMS @F4@
+0 @I9@ INDI
+1 NAME Jacques /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 3 JUN 1967
+2 PLAC Rouen, Seine-Maritime, France
+1 FAMC @F1@
+1 FAMS @F5@
+0 @I10@ INDI
+1 NAME Sylvie /Garnier/
+1 SEX F
+1 BIRT
+2 DATE 24 AUG 1968
+2 PLAC Dijon, Cote-d'Or, France
+1 FAMC @F3@
+1 FAMS @F5@
+0 @I11@ INDI
+1 NAME Philippe /Petit/
+1 SEX M
+1 BIRT
+2 DATE 15 OCT 1970
+2 PLAC Strasbourg, Bas-Rhin, France
+1 FAMC @F2@
+1 FAMS @F6@
+0 @I12@ INDI
+1 NAME Catherine /Marchand/
+1 SEX F
+1 BIRT
+2 DATE 7 FEB 1972
+2 PLAC Metz, Moselle, France
+1 FAMS @F6@
+0 @I13@ INDI
+1 NAME Claire /Moreau/
+1 SEX F
+1 BIRT
+2 DATE 18 DEC 1971
+2 PLAC Rouen, Seine-Maritime, France
+1 FAMC @F1@
+1 FAMS @F7@
+0 @I14@ INDI
+1 NAME Bruno /Carpentier/
+1 SEX M
+1 BIRT
+2 DATE 9 JUL 1969
+2 PLAC Le Havre, Seine-Maritime, France
+1 FAMS @F7@
+0 @I15@ INDI
+1 NAME Michel /Bernard/
+1 SEX M
+1 BIRT
+2 DATE 2 JAN 1965
+2 PLAC Tours, Indre-et-Loire, France
+1 FAMS @F8@
+0 @I16@ INDI
+1 NAME Nathalie /Robert/
+1 SEX F
+1 BIRT
+2 DATE 26 NOV 1964
+2 PLAC Angers, Maine-et-Loire, France
+1 FAMS @F8@
+0 @I17@ INDI
+1 NAME Thomas /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 14 MAY 1992
+2 PLAC Nantes, Loire-Atlantique, France
+1 FAMC @F4@
+1 FAMS @F9@
+0 @I18@ INDI
+1 NAME Emma /Blanchard/
+1 SEX F
+1 BIRT
+2 DATE 21 JUN 1993
+2 PLAC Nantes, Loire-Atlantique, France
+1 FAMS @F9@
+0 @I19@ INDI
+1 NAME Julie /Moreau/
+1 SEX F
+1 BIRT
+2 DATE 30 SEP 1995
+2 PLAC Rennes, Ille-et-Vilaine, France
+1 FAMC @F5@
+0 @I20@ INDI
+1 NAME Lucas /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 12 MAR 1998
+2 PLAC Rennes, Ille-et-Vilaine, France
+1 FAMC @F5@
+1 FAMS @F10@
+0 @I21@ INDI
+1 NAME Lea /Fontaine/
+1 SEX F
+1 BIRT
+2 DATE 8 OCT 1999
+2 PLAC Brest, Finistere, France
+1 FAMS @F10@
+0 @I22@ INDI
+1 NAME Antoine /Petit/
+1 SEX M
+1 BIRT
+2 DATE 5 APR 1999
+2 PLAC Lyon, Rhone, France
+1 FAMC @F6@
+1 FAMS @F11@
+0 @I23@ INDI
+1 NAME Manon /Dubois/
+1 SEX F
+1 BIRT
+2 DATE 17 SEP 2000
+2 PLAC Lyon, Rhone, France
+1 FAMS @F11@
+0 @I24@ INDI
+1 NAME Alice /Carpentier/
+1 SEX F
+1 BIRT
+2 DATE 3 DEC 2001
+2 PLAC Caen, Calvados, France
+1 FAMC @F7@
+0 @I25@ INDI
+1 NAME Hugo /Bernard/
+1 SEX M
+1 BIRT
+2 DATE 22 JUL 1990
+2 PLAC Tours, Indre-et-Loire, France
+1 FAMC @F8@
+1 FAMS @F12@
+0 @I26@ INDI
+1 NAME Zoe /Leroy/
+1 SEX F
+1 BIRT
+2 DATE 14 AUG 1992
+2 PLAC Orleans, Loiret, France
+1 FAMS @F12@
+0 @I27@ INDI
+1 NAME Camille /Bernard/
+1 SEX F
+1 BIRT
+2 DATE 9 FEB 1994
+2 PLAC Tours, Indre-et-Loire, France
+1 FAMC @F8@
+0 @I28@ INDI
+1 NAME Nathan /Moreau/
+1 SEX M
+1 BIRT
+2 DATE 1 JAN 2018
+2 PLAC Nantes, Loire-Atlantique, France
+1 FAMC @F9@
+0 @I29@ INDI
+1 NAME Salome /Moreau/
+1 SEX F
+1 BIRT
+2 DATE 6 JUN 2020
+2 PLAC Nantes, Loire-Atlantique, France
+1 FAMC @F9@
+0 @I30@ INDI
+1 NAME Gabriel /Bernard/
+1 SEX M
+1 BIRT
+2 DATE 25 MAY 2016
+2 PLAC Bordeaux, Gironde, France
+1 FAMC @F12@
+0 @I31@ INDI
+1 NAME Rose /Bernard/
+1 SEX F
+1 BIRT
+2 DATE 3 OCT 2019
+2 PLAC Bordeaux, Gironde, France
+1 FAMC @F12@
+0 @I32@ INDI
+1 NAME Jeanne /Moreau/
+1 SEX F
+1 BIRT
+2 DATE 11 NOV 2022
+2 PLAC Brest, Finistere, France
+1 FAMC @F10@
+0 @I33@ INDI
+1 NAME Marius /Petit/
+1 SEX M
+1 BIRT
+2 DATE 28 FEB 2024
+2 PLAC Lyon, Rhone, France
+1 FAMC @F11@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I7@
+1 CHIL @I9@
+1 CHIL @I13@
+1 MARR
+2 DATE 25 APR 1963
+2 PLAC Rouen, Seine-Maritime, France
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I4@
+1 CHIL @I8@
+1 CHIL @I11@
+1 MARR
+2 DATE 12 OCT 1963
+2 PLAC Reims, Marne, France
+0 @F3@ FAM
+1 HUSB @I5@
+1 WIFE @I6@
+1 CHIL @I10@
+1 MARR
+2 DATE 30 JUN 1962
+2 PLAC Dijon, Cote-d'Or, France
+0 @F4@ FAM
+1 HUSB @I7@
+1 WIFE @I8@
+1 CHIL @I17@
+1 MARR
+2 DATE 15 SEP 1990
+2 PLAC Rouen, Seine-Maritime, France
+0 @F5@ FAM
+1 HUSB @I9@
+1 WIFE @I10@
+1 CHIL @I19@
+1 CHIL @I20@
+1 MARR
+2 DATE 22 JUN 1991
+2 PLAC Dijon, Cote-d'Or, France
+0 @F6@ FAM
+1 HUSB @I11@
+1 WIFE @I12@
+1 CHIL @I22@
+1 MARR
+2 DATE 4 JUL 1996
+2 PLAC Metz, Moselle, France
+0 @F7@ FAM
+1 HUSB @I14@
+1 WIFE @I13@
+1 CHIL @I24@
+1 MARR
+2 DATE 19 JUN 1999
+2 PLAC Le Havre, Seine-Maritime, France
+0 @F8@ FAM
+1 HUSB @I15@
+1 WIFE @I16@
+1 CHIL @I25@
+1 CHIL @I27@
+1 MARR
+2 DATE 10 NOV 1989
+2 PLAC Tours, Indre-et-Loire, France
+0 @F9@ FAM
+1 HUSB @I17@
+1 WIFE @I18@
+1 CHIL @I28@
+1 CHIL @I29@
+1 MARR
+2 DATE 20 AUG 2016
+2 PLAC Nantes, Loire-Atlantique, France
+0 @F10@ FAM
+1 HUSB @I20@
+1 WIFE @I21@
+1 CHIL @I32@
+1 MARR
+2 DATE 18 SEP 2021
+2 PLAC Rennes, Ille-et-Vilaine, France
+0 @F11@ FAM
+1 HUSB @I22@
+1 WIFE @I23@
+1 CHIL @I33@
+1 MARR
+2 DATE 27 MAY 2023
+2 PLAC Lyon, Rhone, France
+0 @F12@ FAM
+1 HUSB @I25@
+1 WIFE @I26@
+1 CHIL @I30@
+1 CHIL @I31@
+1 MARR
+2 DATE 11 JUL 2015
+2 PLAC Tours, Indre-et-Loire, France
+0 TRLR
